@@ -15,7 +15,10 @@ public class ChatController {
 	@SendTo("/chat/message")
 	public Message receipMessage(Message message) {
 		message.setDate(new Date().getTime());
-		message.setText("Recibido por el broker: " + message.getText());
+		if(message.getType().equals("NEW_USER")) {
+			message.setText("Nuevo usuario: ");
+		}
+		//message.setText("Recibido por el broker: " + message.getText());
 		return message;
 	}
 
