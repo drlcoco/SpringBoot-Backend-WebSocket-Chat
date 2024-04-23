@@ -25,5 +25,11 @@ public class ChatController {
 		//message.setText("Recibido por el broker: " + message.getText());
 		return message;
 	}
+	
+	@MessageMapping("/writing")
+	@SendTo("/chat/writing")
+	public String writingMessage(String username) {
+		return username.concat(" está escribiendo ...");
+	}
 
 }
