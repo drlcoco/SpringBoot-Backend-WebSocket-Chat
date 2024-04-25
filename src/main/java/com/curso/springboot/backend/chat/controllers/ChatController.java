@@ -3,14 +3,19 @@ package com.curso.springboot.backend.chat.controllers;
 import java.util.Date;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 import com.curso.springboot.backend.chat.model.document.Message;
+import com.curso.springboot.backend.chat.model.service.ChatService;
 
 @Controller
 public class ChatController {
+	
+	@Autowired
+	private ChatService chatService;
 	
 	private String[] colors = {"red", "green", "blue", "black", "magenta", "purple", "orange"};
 	
@@ -21,6 +26,8 @@ public class ChatController {
 		if(message.getType().equals("NEW_USER")) {
 			message.setColor(colors[new Random().nextInt(colors.length)]);
 			message.setText("Nuevo usuario: ");
+		} else {
+			chatService.save(message);
 		}
 		//message.setText("Recibido por el broker: " + message.getText());
 		return message;
